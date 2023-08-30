@@ -1,0 +1,14 @@
+Stack is a linear data structure in which insertions and deletions are only allowed
+at the end, called the top of the stack
+Works on the principle of LIFO, last in first out.
+All operations on stack should take O(1)
+
+Primary stack opertaions
+    push(data): inserts data onto the the stack
+    pop(): delete and returns the last inserted element from the stack (top most element)
+
+Secondary stack operations
+    top(): returns the last inserted element without removing it (top most element)
+    size(): returns the number of elements in the stack
+    isEmpty(): returns true if stack is empty
+    isFull(): returns true if stack is full
