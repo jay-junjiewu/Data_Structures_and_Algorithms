@@ -1,0 +1,43 @@
+Tree is a nonlinear data structure, it is a hierarchical structure
+Can also be called recursive data structure, root node branching to subtrees
+Root node is at the top and it branches down
+Nodes can contain different types of data and can branch down to its children nodes (it is the parent node)
+Children of the same parent node are siblings
+Any node that does not have a child is called a leaf node, else it is an internal node
+If node A can be branched to node B, then A is the ancestor of B and B is descendent of A 
+
+Tree with N nodes has N-1 edges, all nodes except root node has one incoming edge
+Depth of a node is the length of path (number of edges) from root to node
+Height of a node is the longest length of path (number of edges) from the node to a leaf node
+Height of a tree is the height of the root node
+Height of tree with one node is 0, height of empty tree is -1
+
+Binary tree is a tree in which each node can have at most two children (left child and right child)
+Strict/Proper binary tree is when each node can have either 0 or 2 children
+Complete binary tree is when all levels are completely filled, 
+    except possibly the last level where all nodes are as left as possible
+Perfect binary tree is when all levels are completely filled 
+Balanced binary tree is when difference between height of left and right subtree of each node is <= k (usually k=1)
+
+Max nodes at level i of a binary tree is 2^i
+Max nodes in a binary tree with height h is 2^0 + 2^1 + ... + 2^h = 2^(h+1) - 1 = 2^(number of levels) - 1
+Height of perfect binary tree with n nodes is h = log(n+1)-1    (log base 2)
+Height of complete binary tree is floor(log(n))     (take the integer of log(n))
+
+Binary tree can be implemented using dynamically created nodes linked by pointers (similar to linked list)
+Arrays can be used for complete binary trees where for node at index i, 
+    index of left child and right child is 2*i+1 and 2*i+2 respectively
+
+Binary search tree (BST) is binary tree where in internal node, 
+    value of all nodes in left subtree is <= internal node and all nodes in right subtree > internal node
+Search space in balanced BST: n -> n/2 -> n/4 -> ... -> 1    max steps is k=log(n) so search time is O(log(n))
+Worst case is when it is unbalanced with nodes in decreasing arrangement to the left or
+    increasing arrangement to the right (linked list) with a search time is O(n)
+Inserting and deleting of a BST is also O(log(n))
+After inserting or deleting nodes in balanced BST, it gets unbalanced so we need to restore the balancing
+
+
+
+
+
+
