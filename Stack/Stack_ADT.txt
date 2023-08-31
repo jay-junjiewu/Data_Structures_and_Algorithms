@@ -3,8 +3,8 @@ at the end, called the top of the stack
 Works on the principle of LIFO, last in first out.
 All operations on stack should take O(1)
 
-Primary stack opertaions
-    push(data): inserts data onto the the stack
+Primary stack operations
+    push(data): inserts data onto the stack
     pop(): delete and returns the last inserted element from the stack (top most element)
 
 Secondary stack operations

@@ -1,0 +1,14 @@
+Queue is a linear data structure in which insertions can be done at the tail (rear)
+and deletion can be done at head (front)
+Works on the principle of FIFO, first in first out.
+All operations on queue should take O(1)
+
+Primary queue opertaions
+    enqueue(data)/push(data): inserts data into the queue
+    dequeue()/pop(): deletes and returns the head of the queue (top most element)
+
+Secondary queue operations
+    front()/peek(): returns the head
+    size(): returns the number of elements in the queue
+    isEmpty(): returns true if queue is empty
+    isFull(): returns true if queue is full
