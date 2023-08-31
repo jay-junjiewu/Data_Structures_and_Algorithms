@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Binary Search Tree (BST) implementation using dynamically created nodes
 /*
-Binary search tree (BST) is binary tree where in internal node, 
+Binary Search Tree (BST) implementation using dynamically created nodes
+BST is binary tree where in internal node, 
     value of all nodes in left subtree is <= internal node and all nodes in right subtree > internal node
 */
 
