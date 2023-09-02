@@ -28,6 +28,9 @@ void preorder(struct node *root);
 void inorder(struct node *root);
 void postorder(struct node *root);
 
+int is_BST(struct node *root);
+
+struct node *delete_node(struct node *root, int data, int mode);
 
 
 int main() {
@@ -60,15 +63,20 @@ int main() {
     printf("%d\t", search(BSTroot, 69));
     printf("\n");
 
-    printf("Min: %d\t", find_min(BSTroot));
-    printf("Max: %d\t", find_max(BSTroot));              printf("\n");
+    printf("Min: %d\t%d\n", find_min(BSTroot)), find_max(BSTroot);
 
-    printf("Height: %d\t", height(BSTroot));             printf("\n");
+    printf("Height: %d\n", height(BSTroot));
 
     printf("Level Order: ");    level_order(BSTroot);    printf("\n");
     printf("Preorder: ");       preorder(BSTroot);       printf("\n");
     printf("Inorder: ");        inorder(BSTroot);        printf("\n");
     printf("Postorder: ");      postorder(BSTroot);      printf("\n");
+
+    printf("Is BST: %d\n", is_BST(BSTroot));
+
+    BSTroot = delete_node(BSTroot, 15, 0); // Left Node gets shifted up if node to delete has 2 children
+    //BSTroot = delete_node(BSTroot, 15, 1); // Right Node gets shifted up if node to delete has 2 children
+    printf("Level Order: ");    level_order(BSTroot);    printf("\n");
    
     return 0;
 }
@@ -220,4 +228,93 @@ void postorder(struct node *root) {
     postorder(root->left);      // L
     postorder(root->right);     // R
     printf("%d ", root->data);  // D
+}
+
+// Determines whether a binary tree is a BST
+// BT is a BST when left child <= parent, right child > parent, two subtrees are BST
+// returns 1 if BT is BST
+// Time complexity is O(n) since all nodes are being traveresed through once
+// Alternitavely can traverse inorder and if values are nondecreasing, then BT is BST
+int is_BST(struct node *root) {
+    if(root == NULL) {
+        printf("Empty Tree!");
+        exit(1);
+    }
+    // Leaf Node
+    if(root->left == NULL && root->right == NULL) return 1;
+
+    if(root->left != NULL) {
+        // Checks if left child node is <= parent node
+        if( !(root->left->data <= root->data) ) return 0;
+
+        // Checks if left subtree is BST
+        if( !is_BST(root->left) ) return 0;
+    }
+    if(root->right != NULL) {
+        // Checks if right child node is > parent node
+        if( !(root->right->data > root->data) ) return 0;
+
+        // Checks if right subtree is BST
+        if( !is_BST(root->right) ) return 0;
+    }
+    return 1;
+}
+
+// When we delete a node from a BST, different situations may occur
+//      node is leaf node: remains a BST if leaf node is removed
+//      node has 1 child: remains a BST if we point the parent node to the child node
+//      node has 2 child: 
+//        mode 0: find max in left subtree, copy max into node to delete, delete duplicate from left subtree
+//        mode 1: find min in right subtree, copy min into node to delete, delete duplicate from right subtree
+// Worst case scenario, we have to traverse half of the tree so time complexity is O(log n)
+struct node *delete_node(struct node *root, int data, int mode) {
+    if(root == NULL) return NULL;
+    
+    // Node to delete is root
+    if(data == root->data) {
+        // node is leaf node
+        if(root->left == NULL && root->right == NULL) {
+            free(root);
+            root = NULL;
+            return NULL;
+        }
+
+        // node has 1 child (XOR)
+        if(root->left == NULL ^ root->right == NULL) {
+            struct node *to_delete = root;
+            if(root->left != NULL) {
+                root = root->left;
+            } else {
+                root = root->right;
+            }
+            free(to_delete);
+            return root;
+        }
+
+        // node has 2 children
+        if(mode == 0) {
+            // Shift left child up
+            int max = find_max(root->left);
+            root->data = max;
+            root->left = delete_node(root->left, max, mode);
+            return root;
+        } else {
+            // Shift right child up
+            int min = find_min(root->right);
+            root->data = min;
+            root->right = delete_node(root->right, min, mode);
+            return root;
+        }
+
+    }
+    // Node to delete is in left subtree
+    if(data < root->data) {
+        root->left = delete_node(root->left, data, mode);
+        return root;
+    } 
+    // Node to delete is in right subtree
+    if(data > root->data) {
+        root->right = delete_node(root->right, data, mode);
+        return root;
+    }
 }
