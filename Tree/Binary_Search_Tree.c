@@ -32,6 +32,9 @@ int is_BST(struct node *root);
 
 struct node *delete_node(struct node *root, int data, int mode);
 
+struct node *get_successor(struct node *root, int data);
+struct node *find_node(struct node *root, int data);
+
 
 int main() {
     struct node *BSTroot = NULL;   // Empty tree
@@ -74,9 +77,11 @@ int main() {
 
     printf("Is BST: %d\n", is_BST(BSTroot));
 
-    BSTroot = delete_node(BSTroot, 15, 0); // Left Node gets shifted up if node to delete has 2 children
+    //BSTroot = delete_node(BSTroot, 15, 0); // Left Node gets shifted up if node to delete has 2 children
     //BSTroot = delete_node(BSTroot, 15, 1); // Right Node gets shifted up if node to delete has 2 children
-    printf("Level Order: ");    level_order(BSTroot);    printf("\n");
+    //printf("Level Order: ");    level_order(BSTroot);    printf("\n");
+
+    printf("Inorder successor of 15: %d\n", get_successor(BSTroot, 15)->data);
    
     return 0;
 }
@@ -316,5 +321,55 @@ struct node *delete_node(struct node *root, int data, int mode) {
     if(data > root->data) {
         root->right = delete_node(root->right, data, mode);
         return root;
+    }
+}
+
+
+// When we perform inorder traverse of BST, we get the data in ascending order, 
+//   we wish to find the inorder successor of a given data in BST
+//      
+// Time complexity is O(log n)
+struct node *get_successor(struct node *root, int data) {
+    // Find the node that we want the successor of, O(log n)
+    struct node *current = find_node(root, data);
+
+    if(current == NULL) return NULL;
+
+    // Node has right subtree: successor is the left most node (min) in right subtree
+    // Time complexity of finding the minimum is O(log n)
+    if(current->right != NULL) {
+        current = current->right;
+        while(current->left != NULL) {
+            current = current->left;
+        }
+        return current;
+    }
+
+    // Node has no right subtree: trace the path from root to node and find the deepest ancestor 
+    //    for which current node is in its left subtree
+    // Time complexity of tracing the path is O(log n)
+    struct node *successor = NULL;
+    struct node *ancestor = root;
+    while(ancestor != current) {
+        if(current->data < ancestor->data) {
+            successor = ancestor;
+            ancestor = ancestor->left;
+        } else {
+            ancestor = ancestor->right;
+        }
+    }
+    return successor;
+    
+}
+struct node *find_node(struct node *root, int data) {
+    if(root == NULL)            return NULL;   // Tree is empty
+    if (root->data == data)     return root;   // Found the value
+
+    if(data < root->data) {
+        // Search to left of tree
+        return find_node(root->left, data);
+    } else {
+        // Search to right of tree
+        return find_node(root->right, data);
     }
 }
