@@ -181,9 +181,9 @@ int height(struct node *root) {
     }
 }
 
-// Breadth-first/Level-order BT traversal: visiting all nodes at same level first before moving on to next level
+// Breadth-first/Level-order BT traversal (BFS): visiting all nodes at same level first before moving on to next level
 
-// Depth-first BT traversal: visiting the whole subtree of a child node before moving to the next child node
+// Depth-first BT traversal (DFS): visiting the whole subtree of a child node before moving to the next child node
 //      Preorder traversal:     root, left, right   DLR
 //      Inorder traversal:      left, root, right   LDR     gives a sorted list in BST
 //      Postorder traversal:    left, right, root   LRD
