@@ -6,6 +6,10 @@ using namespace std;
 // Note that we need to use g++ compiler for C++ file (not gcc), change it in the tasks.json file
 
 /* 
+Public: Any member can access
+Protected: Only members in the same class or derived class can access
+Private: Only members in same class can access
+
 Constructor: a special function that creates an instance (object) of the class
 
 Encapsulation: bundling of data with the mechanisms or methods that operate on the data
@@ -22,9 +26,9 @@ Inheritance: Reusing and extending existing classes without modifying them, prod
 
 class Vehicle{
 private:
-    int Year;
     list<string> History;
-
+protected:
+    int Year;
 public:
     // Constructor
     Vehicle(int Year) {
@@ -53,7 +57,7 @@ public:
         
     }
     void Charge() {
-        cout << "Charging..." << endl;
+        cout << "Vehicle from year " << Year << " is charging..." << endl;
     }
 };
 
@@ -65,11 +69,14 @@ int main() {
     v1.Get_Info();
     //v1.Charge(); will throw an error since the base class cannot access elements of the derived class
 
-    Electric_Car e1(2022);
+    Electric_Car e1(2021);
     e1.Set_History("History X");
     e1.Set_History("History Y");
     e1.Get_Info();
     e1.Charge();
+
+    Electric_Car e2(2022);
+    e2.Charge();
 
     return 0;
 }
