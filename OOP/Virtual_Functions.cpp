@@ -14,7 +14,7 @@ Virtual function: Function that is defined in base class and redefined in derive
 Pure Virtual function: No implementation in base class and forces its derived class to have their own implementation
     PlaySong() is a pure virtual function, making the class is an abstract class 
     An abstract class in C++ is a class with at least one pure virtual function
-    We cannot create objects of an abstrct class
+    We cannot create objects of an abstract class
 */
 
 class Instrument {
