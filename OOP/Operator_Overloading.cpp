@@ -78,23 +78,34 @@ public:
         this->Brand = Brand;
         this->Year = Year;
     }
-    // Accessor
-    string get_Brand() {
-        return Brand;
-    }
-    int get_Year() {
-        return Year;
-    }
+
+    // Friend class
+    friend class Friend_Class;
+    // Friend function
+    friend int get_Year(Laptop l);
+    
     // Overloading operator == for type Laptop
     const bool operator==(const Laptop &l) {
         return this->Brand == l.Brand && this->Year == l.Year;
     }
 };
+// Friend class to access the private members
+class Friend_Class {
+public: 
+    string get_Brand(Laptop l) {
+        return l.Brand;
+    }
+};
+// Friend function to access the private members
+int get_Year(Laptop l) {
+        return l.Year;
+}
 // Overloaded operator << for type Laptop
 ostream &operator<<(ostream &COUT, Laptop &l) {
-    // Cannot use l.Brand since members are private and can only be accessd through public accessors
-    COUT << "Brand: " << l.get_Brand() << endl;
-    COUT << "Year: " << l.get_Year() << endl;
+    // Cannot use l.Brand since members are private and can be accessed through friend class or friend function
+    Friend_Class f;
+    COUT << "Brand: " << f.get_Brand(l) << endl;    // Through friend class object
+    COUT << "Year: " << get_Year(l) << endl;        // Through friend function
     return COUT;
 }
 
